@@ -1,0 +1,49 @@
+USE [dotnet_evaluation]
+GO
+/****** Object:  StoredProcedure [dbo].[student_procedure]    Script Date: 14-07-2025 02:32:46 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[student_procedure]
+(@para varchar(50)='',@register_no int=0, @st_name varchar(50)='', @st_age int=0, @st_phoneNum varchar(15)='', 
+  @st_class int=0, @st_photo varchar(200)='', @st_email varchar(100)='', @st_password varchar(50)='')
+AS
+
+IF @para = 'login_student'
+BEGIN
+SELECT * FROM student_table WHERE st_email = @st_email AND st_password = @st_password;
+END
+
+IF @para = 'register_student'
+BEGIN
+insert into student_table values (@st_name, @st_age, @st_phoneNum, @st_class, @st_photo, @st_email, @st_password)
+END
+
+
+IF @para = 'view_registered_students'
+BEGIN
+SELECT * FROM student_table 
+END
+
+IF @para = 'view_all_students_result'
+BEGIN
+SELECT * FROM student_table inner join marks_table on student_table.register_no = marks_table.st_regno
+END
+
+IF @para = 'get_student_details_by_id'
+BEGIN
+SELECT * FROM student_table where register_no=@register_no
+END
+
+IF @para = 'update_By_ID'
+BEGIN
+update student_table set st_name=@st_name, st_age=@st_age, st_phoneNum=@st_phoneNum, st_class=@st_class, st_photo=@st_photo, st_email=@st_email, st_password=@st_password where register_no=@register_no
+END
+
+IF @para = 'view_result_by_id'
+BEGIN
+select * from student_table inner join marks_table on student_table.register_no = marks_table.st_regno where marks_table.st_regno=@register_no
+END
+

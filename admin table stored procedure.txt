@@ -1,0 +1,17 @@
+USE [dotnet_evaluation]
+GO
+/****** Object:  StoredProcedure [dbo].[admin_procedure]    Script Date: 14-07-2025 02:32:45 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[admin_procedure]
+(@para varchar(50)='', @admin_id int=0, @admin_email varchar(100)='', @admin_password varchar(50)='')
+AS
+
+IF @para = 'login_admin'
+BEGIN
+ select * from admin_table where admin_email=@admin_email AND admin_password=@admin_password
+END
+
